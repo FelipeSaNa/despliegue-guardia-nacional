@@ -23,5 +23,20 @@ estacion_all = estacion_2019 %>%
     full_join(estacion_2021) %>%
     rename(migrantes_detenidos = value)
 
+#joining both databases
+data_guardia_estaciones =
+    guardia_all %>%
+    left_join(estacion_all, by = c("ano", "mes", "entidad", "cve_entidad")) %>%
+    relocate(cve_entidad, .after = entidad)
+
+data_guardia_estaciones_2021 = data_guardia_estaciones %>%
+    filter(ano == 2021)
+
+data_guardia_estaciones_2020 = data_guardia_estaciones %>%
+    filter(ano == 2020)
+
+data_guardia_estaciones_2019 = data_guardia_estaciones %>%
+    filter(ano == 2019)
+
 #removing unwanted variables
 rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
