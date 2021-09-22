@@ -37,21 +37,21 @@ bivariate_color_scale = tibble(
 
 mex_map_2021 = mex_map_2021 %>%
     mutate(Area_quantiles = cut(migrantes_detenidos,
-            breaks = quantiles_Area,
-            include.lowest = TRUE),
-        POP_quantiles = cut(despliegue,
-            breaks = quantiles_Pop,
-            include.lowest = TRUE),
-        group = paste(
-            as.numeric(Area_quantiles), "-",
-            as.numeric(POP_quantiles))) %>%
+                                breaks = quantiles_Area,
+                                include.lowest = TRUE),
+           POP_quantiles = cut(despliegue,
+                               breaks = quantiles_Pop,
+                               include.lowest = TRUE),
+           group = paste(
+               as.numeric(Area_quantiles), "-",
+               as.numeric(POP_quantiles))) %>%
     left_join(bivariate_color_scale, by = "group")
 
 map = ggplot(data = mex_map_2021) +
     # color entidades according to their detenciones/despliegue
     geom_sf(aes(fill = fill),
-        color = "white",
-        size = 0.1) +
+            color = "white",
+            size = 0.1) +
     scale_fill_identity()+
     labs(x = NULL,
          y = NULL,
@@ -78,7 +78,7 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2021.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2021_2.png"), plot = bivariate, device = png())
 
 #2020 map
 # create 3 buckets for Area
@@ -143,7 +143,7 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2020.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2020_2.png"), plot = bivariate, device = png())
 
 #2019 map
 # create 3 buckets for Area
@@ -208,5 +208,6 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2019.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2019_2.png"), plot = bivariate, device = png())
+
 

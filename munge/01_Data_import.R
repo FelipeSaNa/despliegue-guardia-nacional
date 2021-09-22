@@ -6,7 +6,7 @@
 
 ## Loading packages
 pacman::p_load(here, tidyverse, readr, openxlsx, janitor, plotly, hrbrthemes, viridis)
-pacman::p_load(lintr, sf, raster, viridis, cowplot, rmarkdown)
+pacman::p_load(lintr, sf, raster, viridis, cowplot, rmarkdown, ggiraph)
 
 # reading databases of guardia nacional
 data_2019 = read.xlsx(here("data", "raw", "guardia_2019.xlsx"))
