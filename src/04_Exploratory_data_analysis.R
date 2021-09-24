@@ -5,32 +5,47 @@
 # =============================================
 
 # Graph of incidencia delictiva
-incidencia %>%
+# incidencia = incidencia %>%
+#     mutate(delitos = comma(delitos))
+incidencia_1 = incidencia %>%
+    group_by(delitos, entidad, delito) %>%
+    summarize(delitos = sum(delitos))
+
+incidencia_1 %>%
+    # group_by(ano, delito) %>%
 ggplot(aes(fill = delito, x=entidad, y=delitos)) +
-    geom_bar( position="stack",stat = "identity")+
+    geom_bar(position="stack",stat = "identity") +
+    # scale_color_manual(values=c("red", "blue", "#56B4E9"))+
     labs(title = "Incidencia delictiva en entidades del bajío",
          subtitle = "Años 2019-2021",
          caption = "Elaborado por MUCD con información del SESNSP",
          fill = NULL )+
     ylab("Número de víctimas")+
     xlab(NULL)+
-    theme_ipsum()
+    theme_ipsum()+
+    theme(plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))+
+    scale_fill_manual(values = c("Delitos contra la libertad personal" ="#396aa9" ,"Extorsión" = "#4fa26a", "Homicidio doloso y feminicidio"="#ad333d"))
 ggsave(filename = here("plots","incidencia.png"))
 
+
+# Graph of despliegue Guardia Nacional
 guardia_anual = guardia_all %>% filter(mes == "jul") %>%
     group_by(ano) %>%
     summarize(despliegue = sum(despliegue))
 
-# Graph of despliegue Guardia Nacional
 guardia_anual %>%
     ggplot(aes(x=ano, y=despliegue)) +
-    geom_bar(color="blue", fill=rgb(0.1,0.4,0.5,0.7), stat= "identity")+
+    geom_bar(fill = "#00958a", stat= "identity")+
 labs(title = "Elementos de la Guardia Nacional desplegados",
      subtitle = "Desagregado por año al mes de julio",
      caption = "Elaborado por MUCD con información de la Unidad de Transparencia de la GN")+
     ylab("Elementos desplegados")+
     xlab(NULL)+
-    theme_ipsum()
+    theme_ipsum()+
+    theme(plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))+
+scale_y_continuous(name ="Número de víctimas")
 ggsave(filename = here("plots","despliegue_guardia.png"))
 
 
