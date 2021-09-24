@@ -18,6 +18,8 @@ estacion_2019 = read.xlsx(here("data", "raw", "extranjeros_estacion_2019.xlsx"))
 estacion_2020 = read.xlsx(here("data", "raw", "extranjeros_estacion_2020.xlsx"))
 estacion_2021 = read.xlsx(here("data", "raw", "extranjeros_estacion_2021.xlsx"))
 
+#reading incidencia delictiva databases
+incidencia = read.xlsx(here("data", "raw", "incidencia.xlsx"))
 
 #reading database of claves entidades
 load((here("data", "clean", "claves_entidades_clean.RData")))
