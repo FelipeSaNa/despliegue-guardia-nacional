@@ -55,7 +55,7 @@ map = ggplot(data = mex_map_2021) +
     scale_fill_identity()+
     labs(x = NULL,
          y = NULL,
-         title = "México:Densidad de detenciones migratorias por despliegue de la GN",
+         title = "México: Densidad de detenciones migratorias por despliegue de la GN",
          subtitle = "Por entidad federativa en 2021",
          caption = "Elaborado por MUCD con información de la Unidad de Política Migratoria y Guardia Nacional") +
     theme_map()
@@ -120,7 +120,7 @@ map = ggplot(data = mex_map_2020) +
     scale_fill_identity()+
     labs(x = NULL,
          y = NULL,
-         title = "México:Densidad de detenciones migratorias por despliegue de la GN",
+         title = "México: Densidad de detenciones migratorias por despliegue de la GN",
          subtitle = "Por entidad federativa en 2020",
          caption = "Elaborado por MUCD con información de la Unidad de Política Migratoria y Guardia Nacional") +
     theme_map()
@@ -185,7 +185,7 @@ map = ggplot(data = mex_map_2019) +
     scale_fill_identity()+
     labs(x = NULL,
          y = NULL,
-         title = "México:Densidad de detenciones migratorias por despliegue de la GN",
+         title = "México: Densidad de detenciones migratorias por despliegue de la GN",
          subtitle = "Por entidad federativa en 2019",
          caption = "Elaborado por MUCD con información de la Unidad de Política Migratoria y Guardia Nacional") +
     theme_map()
