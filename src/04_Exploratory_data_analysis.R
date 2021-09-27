@@ -8,16 +8,17 @@
 # incidencia = incidencia %>%
 #     mutate(delitos = comma(delitos))
 incidencia_1 = incidencia %>%
-    group_by(delitos, entidad, delito) %>%
+    group_by(delitos, entidad, delito,ano) %>%
     summarize(delitos = sum(delitos))
 
 incidencia_1 %>%
+    filter(ano == 2019) %>%
     # group_by(ano, delito) %>%
 ggplot(aes(fill = delito, x=entidad, y=delitos)) +
     geom_bar(position="stack",stat = "identity") +
     # scale_color_manual(values=c("red", "blue", "#56B4E9"))+
     labs(title = "Incidencia delictiva en entidades del bajío",
-         subtitle = "Años 2019-2021",
+         subtitle = "Año 2019",
          caption = "Elaborado por MUCD con información del SESNSP",
          fill = NULL )+
     ylab("Número de víctimas")+
@@ -26,7 +27,45 @@ ggplot(aes(fill = delito, x=entidad, y=delitos)) +
     theme(plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5))+
     scale_fill_manual(values = c("Delitos contra la libertad personal" ="#396aa9" ,"Extorsión" = "#4fa26a", "Homicidio doloso y feminicidio"="#ad333d"))
-ggsave(filename = here("plots","incidencia.png"))
+ggsave(filename = here("plots","incidencia_2019.png"))
+
+
+incidencia_1 %>%
+    filter(ano == 2020) %>%
+    # group_by(ano, delito) %>%
+    ggplot(aes(fill = delito, x=entidad, y=delitos)) +
+    geom_bar(position="stack",stat = "identity") +
+    # scale_color_manual(values=c("red", "blue", "#56B4E9"))+
+    labs(title = "Incidencia delictiva en entidades del bajío",
+         subtitle = "Año 2020",
+         caption = "Elaborado por MUCD con información del SESNSP",
+         fill = NULL )+
+    ylab("Número de víctimas")+
+    xlab(NULL)+
+    theme_ipsum()+
+    theme(plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))+
+    scale_fill_manual(values = c("Delitos contra la libertad personal" ="#396aa9" ,"Extorsión" = "#4fa26a", "Homicidio doloso y feminicidio"="#ad333d"))
+ggsave(filename = here("plots","incidencia_2020.png"))
+
+incidencia_1 %>%
+    filter(ano == 2021) %>%
+    # group_by(ano, delito) %>%
+    ggplot(aes(fill = delito, x=entidad, y=delitos)) +
+    geom_bar(position="stack",stat = "identity") +
+    # scale_color_manual(values=c("red", "blue", "#56B4E9"))+
+    labs(title = "Incidencia delictiva en entidades del bajío",
+         subtitle = "Año 2021",
+         caption = "Elaborado por MUCD con información del SESNSP",
+         fill = NULL )+
+    ylab("Número de víctimas")+
+    xlab(NULL)+
+    theme_ipsum()+
+    theme(plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))+
+    scale_fill_manual(values = c("Delitos contra la libertad personal" ="#396aa9" ,"Extorsión" = "#4fa26a", "Homicidio doloso y feminicidio"="#ad333d"))
+ggsave(filename = here("plots","incidencia_2021.png"))
+
 
 
 # Graph of despliegue Guardia Nacional
