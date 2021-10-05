@@ -21,6 +21,7 @@ ggplot(aes(fill = delito, x=entidad, y=delitos)) +
          subtitle = "Año 2019",
          caption = "Elaborado por MUCD con información del SESNSP",
          fill = NULL )+
+    scale_y_continuous(label=comma)+
     ylab("Número de víctimas")+
     xlab(NULL)+
     theme_ipsum()+
@@ -40,6 +41,7 @@ incidencia_1 %>%
          subtitle = "Año 2020",
          caption = "Elaborado por MUCD con información del SESNSP",
          fill = NULL )+
+    scale_y_continuous(label=comma)+
     ylab("Número de víctimas")+
     xlab(NULL)+
     theme_ipsum()+
@@ -58,6 +60,7 @@ incidencia_1 %>%
          subtitle = "Año 2021",
          caption = "Elaborado por MUCD con información del SESNSP",
          fill = NULL )+
+    scale_y_continuous(label=comma)+
     ylab("Número de víctimas")+
     xlab(NULL)+
     theme_ipsum()+
@@ -75,7 +78,9 @@ guardia_anual = guardia_all %>% filter(mes == "jul") %>%
 
 guardia_anual %>%
     ggplot(aes(x=ano, y=despliegue)) +
-    geom_bar(fill = "#00958a", stat= "identity")+
+    geom_bar(fill = "#69b3a2", stat= "identity")+
+    geom_text(aes(label=despliegue), vjust=-0.1, hjust =0.5,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma, name ="Número de víctimas")+
 labs(title = "Elementos de la Guardia Nacional desplegados",
      subtitle = "Desagregado por año al mes de julio",
      caption = "Elaborado por MUCD con información de la Unidad de Transparencia de la GN")+
@@ -83,8 +88,7 @@ labs(title = "Elementos de la Guardia Nacional desplegados",
     xlab(NULL)+
     theme_ipsum()+
     theme(plot.title = element_text(hjust = 0.5),
-          plot.subtitle = element_text(hjust = 0.5))+
-scale_y_continuous(name ="Número de víctimas")
+          plot.subtitle = element_text(hjust = 0.5))
 ggsave(filename = here("plots","despliegue_guardia.png"))
 
 
@@ -185,7 +189,296 @@ ggsave(filename = here("plots","despliegue_guardia.png"))
 #     scale_x_discrete(name = "Año",limits = c(2019, 2020,2021))+
 #     # xlab("Año")+
 #     ylab("Número de migrantes")
+data_guardia_estaciones_2019 %>%
+    group_by(entidad) %>%
+    summarize(total_detenciones = sum(migrantes_detenidos)) %>%
+    filter(!is.na(total_detenciones)) %>%
+    arrange(total_detenciones) %>%
+    tail(10) %>%
+    mutate(entidad = case_when(entidad == "aguascalientes" ~ "Aguascalientes",
+                               entidad == "baja_california" ~ "Baja California",
+                               entidad == "baja_california_sur" ~ "Baja California Sur",
+                               entidad == "campeche" ~ "Campeche",
+                               entidad == "chiapas" ~ "Chiapas",
+                               entidad == "chihuahua" ~"Chihuahua",
+                               entidad == "coahuila_de_zaragoza" ~"Coahuila",
+                               entidad == "colima" ~ "Colima",
+                               entidad == "ciudad_de_mexico" ~ "Ciudad de México",
+                               entidad == "durango" ~ "Durango",
+                               entidad == "guanajuato" ~ "Guanajuato",
+                               entidad == "guerrero" ~ "Guerrero",
+                               entidad == "hidalgo" ~ "Hidalgo",
+                               entidad == "jalisco" ~ "Jalisco",
+                               entidad == "mexico" ~ "Estado de México",
+                               entidad == "michoacan_de_ocampo" ~ "Michoacán",
+                               entidad == "morelos" ~ "Morelos",
+                               entidad == "nayarit" ~ "Nayarit",
+                               entidad == "nuevo_leon" ~ "Nuevo León",
+                               entidad == "oaxaca" ~ "Oaxaca",
+                               entidad == "puebla" ~ "Puebla",
+                               entidad == "queretaro" ~ "Querétaro",
+                               entidad == "quintana_roo" ~ "Quintana Roo",
+                               entidad == "san_luis_potosi" ~ "San Luis Potosí",
+                               entidad == "sinaloa" ~ "Sinaloa",
+                               entidad == "sonora" ~ "Sonora",
+                               entidad == "tabasco" ~ "Tabasco",
+                               entidad == "tamaulipas" ~ "Tamaulipas",
+                               entidad == "tlaxcala" ~ "Tlaxcala",
+                               entidad == "veracruz_de_ignacio_de_la_llave" ~"Veracruz",
+                               entidad == "yucatan" ~ "Yucatán",
+                               entidad == "zacatecas" ~"Zacatecas")) %>%
+    mutate(entidad=factor(entidad, entidad)) %>%
+    ggplot( aes(x=entidad, y=total_detenciones) ) +
+    geom_bar(stat="identity", fill="#69b3a2") +
+    geom_text(aes(label=total_detenciones), vjust=1, hjust =1,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma)+
+    coord_flip() +
+    theme_ipsum() +
+    theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position="bottom",
+        plot.title = element_text(size=16),
+        plot.subtitle = element_text(size=10)) +
+    labs(title = "Diez entidades con mayor número de detenciones migratorias",
+         subtitle = "Año 2019",
+         caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
+    xlab("") +
+    ylab("Total de detenciones migratorias por entidad federativa")
+ggsave("grafica_detenciones_2019.png", path = here("plots"))
 
+data_guardia_estaciones_2020 %>%
+    group_by(entidad) %>%
+    summarize(total_detenciones = sum(migrantes_detenidos)) %>%
+    filter(!is.na(total_detenciones)) %>%
+    arrange(total_detenciones) %>%
+    tail(10) %>%
+    mutate(entidad = case_when(entidad == "aguascalientes" ~ "Aguascalientes",
+                               entidad == "baja_california" ~ "Baja California",
+                               entidad == "baja_california_sur" ~ "Baja California Sur",
+                               entidad == "campeche" ~ "Campeche",
+                               entidad == "chiapas" ~ "Chiapas",
+                               entidad == "chihuahua" ~"Chihuahua",
+                               entidad == "coahuila_de_zaragoza" ~"Coahuila",
+                               entidad == "colima" ~ "Colima",
+                               entidad == "ciudad_de_mexico" ~ "Ciudad de México",
+                               entidad == "durango" ~ "Durango",
+                               entidad == "guanajuato" ~ "Guanajuato",
+                               entidad == "guerrero" ~ "Guerrero",
+                               entidad == "hidalgo" ~ "Hidalgo",
+                               entidad == "jalisco" ~ "Jalisco",
+                               entidad == "mexico" ~ "Estado de México",
+                               entidad == "michoacan_de_ocampo" ~ "Michoacán",
+                               entidad == "morelos" ~ "Morelos",
+                               entidad == "nayarit" ~ "Nayarit",
+                               entidad == "nuevo_leon" ~ "Nuevo León",
+                               entidad == "oaxaca" ~ "Oaxaca",
+                               entidad == "puebla" ~ "Puebla",
+                               entidad == "queretaro" ~ "Querétaro",
+                               entidad == "quintana_roo" ~ "Quintana Roo",
+                               entidad == "san_luis_potosi" ~ "San Luis Potosí",
+                               entidad == "sinaloa" ~ "Sinaloa",
+                               entidad == "sonora" ~ "Sonora",
+                               entidad == "tabasco" ~ "Tabasco",
+                               entidad == "tamaulipas" ~ "Tamaulipas",
+                               entidad == "tlaxcala" ~ "Tlaxcala",
+                               entidad == "veracruz_de_ignacio_de_la_llave" ~"Veracruz",
+                               entidad == "yucatan" ~ "Yucatán",
+                               entidad == "zacatecas" ~"Zacatecas")) %>%
+    mutate(entidad=factor(entidad, entidad)) %>%
+    ggplot( aes(x=entidad, y=total_detenciones) ) +
+    geom_bar(stat="identity", fill="#69b3a2") +
+    geom_text(aes(label=total_detenciones), vjust=1, hjust =1,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma)+
+    coord_flip() +
+    theme_ipsum() +
+    theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position="bottom",
+        plot.title = element_text(size=16),
+        plot.subtitle = element_text(size=10)) +
+    labs(title = "Diez entidades con mayor número de detenciones migratorias",
+         subtitle = "Año 2020",
+         caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
+    xlab("") +
+    ylab("Total de detenciones migratorias por entidad federativa")
+ggsave("grafica_detenciones_2020.png", path = here("plots"))
+
+data_guardia_estaciones_2021 %>%
+    group_by(entidad) %>%
+    summarize(total_detenciones = sum(migrantes_detenidos)) %>%
+    filter(!is.na(total_detenciones)) %>%
+    arrange(total_detenciones) %>%
+    tail(10) %>%
+    mutate(entidad = case_when(entidad == "aguascalientes" ~ "Aguascalientes",
+                               entidad == "baja_california" ~ "Baja California",
+                               entidad == "baja_california_sur" ~ "Baja California Sur",
+                               entidad == "campeche" ~ "Campeche",
+                               entidad == "chiapas" ~ "Chiapas",
+                               entidad == "chihuahua" ~"Chihuahua",
+                               entidad == "coahuila_de_zaragoza" ~"Coahuila",
+                               entidad == "colima" ~ "Colima",
+                               entidad == "ciudad_de_mexico" ~ "Ciudad de México",
+                               entidad == "durango" ~ "Durango",
+                               entidad == "guanajuato" ~ "Guanajuato",
+                               entidad == "guerrero" ~ "Guerrero",
+                               entidad == "hidalgo" ~ "Hidalgo",
+                               entidad == "jalisco" ~ "Jalisco",
+                               entidad == "mexico" ~ "Estado de México",
+                               entidad == "michoacan_de_ocampo" ~ "Michoacán",
+                               entidad == "morelos" ~ "Morelos",
+                               entidad == "nayarit" ~ "Nayarit",
+                               entidad == "nuevo_leon" ~ "Nuevo León",
+                               entidad == "oaxaca" ~ "Oaxaca",
+                               entidad == "puebla" ~ "Puebla",
+                               entidad == "queretaro" ~ "Querétaro",
+                               entidad == "quintana_roo" ~ "Quintana Roo",
+                               entidad == "san_luis_potosi" ~ "San Luis Potosí",
+                               entidad == "sinaloa" ~ "Sinaloa",
+                               entidad == "sonora" ~ "Sonora",
+                               entidad == "tabasco" ~ "Tabasco",
+                               entidad == "tamaulipas" ~ "Tamaulipas",
+                               entidad == "tlaxcala" ~ "Tlaxcala",
+                               entidad == "veracruz_de_ignacio_de_la_llave" ~"Veracruz",
+                               entidad == "yucatan" ~ "Yucatán",
+                               entidad == "zacatecas" ~"Zacatecas")) %>%
+    mutate(entidad=factor(entidad, entidad)) %>%
+    ggplot( aes(x=entidad, y=total_detenciones) ) +
+    geom_bar(stat="identity", fill="#69b3a2") +
+    geom_text(aes(label=total_detenciones), vjust=1, hjust =1,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma)+
+    coord_flip() +
+    theme_ipsum() +
+    theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position="bottom",
+        plot.title = element_text(size=16),
+        plot.subtitle = element_text(size=10)) +
+    labs(title = "Diez entidades con mayor número de detenciones migratorias",
+         subtitle = "Año 2021",
+         caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
+    xlab("") +
+    ylab("Total de detenciones migratorias por entidad federativa")
+ggsave("grafica_detenciones_2021.png", path = here("plots"))
+
+
+
+data_guardia_estaciones_2020 %>%
+    group_by(entidad) %>%
+    summarize(total_detenciones = sum(migrantes_detenidos)) %>%
+    filter(!is.na(total_detenciones)) %>%
+    arrange(total_detenciones) %>%
+    tail(10) %>%
+    mutate(entidad = case_when(entidad == "aguascalientes" ~ "Aguascalientes",
+                               entidad == "baja_california" ~ "Baja California",
+                               entidad == "baja_california_sur" ~ "Baja California Sur",
+                               entidad == "campeche" ~ "Campeche",
+                               entidad == "chiapas" ~ "Chiapas",
+                               entidad == "chihuahua" ~"Chihuahua",
+                               entidad == "coahuila_de_zaragoza" ~"Coahuila",
+                               entidad == "colima" ~ "Colima",
+                               entidad == "ciudad_de_mexico" ~ "Ciudad de México",
+                               entidad == "durango" ~ "Durango",
+                               entidad == "guanajuato" ~ "Guanajuato",
+                               entidad == "guerrero" ~ "Guerrero",
+                               entidad == "hidalgo" ~ "Hidalgo",
+                               entidad == "jalisco" ~ "Jalisco",
+                               entidad == "mexico" ~ "Estado de México",
+                               entidad == "michoacan_de_ocampo" ~ "Michoacán",
+                               entidad == "morelos" ~ "Morelos",
+                               entidad == "nayarit" ~ "Nayarit",
+                               entidad == "nuevo_leon" ~ "Nuevo León",
+                               entidad == "oaxaca" ~ "Oaxaca",
+                               entidad == "puebla" ~ "Puebla",
+                               entidad == "queretaro" ~ "Querétaro",
+                               entidad == "quintana_roo" ~ "Quintana Roo",
+                               entidad == "san_luis_potosi" ~ "San Luis Potosí",
+                               entidad == "sinaloa" ~ "Sinaloa",
+                               entidad == "sonora" ~ "Sonora",
+                               entidad == "tabasco" ~ "Tabasco",
+                               entidad == "tamaulipas" ~ "Tamaulipas",
+                               entidad == "tlaxcala" ~ "Tlaxcala",
+                               entidad == "veracruz_de_ignacio_de_la_llave" ~"Veracruz",
+                               entidad == "yucatan" ~ "Yucatán",
+                               entidad == "zacatecas" ~"Zacatecas")) %>%
+    mutate(entidad=factor(entidad, entidad)) %>%
+    ggplot( aes(x=entidad, y=total_detenciones) ) +
+    geom_bar(stat="identity", fill="#69b3a2") +
+    geom_text(aes(label=total_detenciones), vjust=1, hjust =1,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma)+
+    coord_flip() +
+    theme_ipsum() +
+    theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position="bottom",
+        plot.title = element_text(size=16),
+        plot.subtitle = element_text(size=10)) +
+    labs(title = "Diez entidades con mayor número de detenciones migratorias",
+         subtitle = "Año 2020",
+         caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
+    xlab("") +
+    ylab("Total de detenciones migratorias por entidad federativa")
+ggsave("grafica_detenciones_2020.png", path = here("plots"))
+
+data_guardia_estaciones %>%
+    group_by(entidad) %>%
+    summarize(total_detenciones = sum(migrantes_detenidos)) %>%
+    filter(!is.na(total_detenciones)) %>%
+    arrange(total_detenciones) %>%
+    tail(10) %>%
+    mutate(entidad = case_when(entidad == "aguascalientes" ~ "Aguascalientes",
+                               entidad == "baja_california" ~ "Baja California",
+                               entidad == "baja_california_sur" ~ "Baja California Sur",
+                               entidad == "campeche" ~ "Campeche",
+                               entidad == "chiapas" ~ "Chiapas",
+                               entidad == "chihuahua" ~"Chihuahua",
+                               entidad == "coahuila_de_zaragoza" ~"Coahuila",
+                               entidad == "colima" ~ "Colima",
+                               entidad == "ciudad_de_mexico" ~ "Ciudad de México",
+                               entidad == "durango" ~ "Durango",
+                               entidad == "guanajuato" ~ "Guanajuato",
+                               entidad == "guerrero" ~ "Guerrero",
+                               entidad == "hidalgo" ~ "Hidalgo",
+                               entidad == "jalisco" ~ "Jalisco",
+                               entidad == "mexico" ~ "Estado de México",
+                               entidad == "michoacan_de_ocampo" ~ "Michoacán",
+                               entidad == "morelos" ~ "Morelos",
+                               entidad == "nayarit" ~ "Nayarit",
+                               entidad == "nuevo_leon" ~ "Nuevo León",
+                               entidad == "oaxaca" ~ "Oaxaca",
+                               entidad == "puebla" ~ "Puebla",
+                               entidad == "queretaro" ~ "Querétaro",
+                               entidad == "quintana_roo" ~ "Quintana Roo",
+                               entidad == "san_luis_potosi" ~ "San Luis Potosí",
+                               entidad == "sinaloa" ~ "Sinaloa",
+                               entidad == "sonora" ~ "Sonora",
+                               entidad == "tabasco" ~ "Tabasco",
+                               entidad == "tamaulipas" ~ "Tamaulipas",
+                               entidad == "tlaxcala" ~ "Tlaxcala",
+                               entidad == "veracruz_de_ignacio_de_la_llave" ~"Veracruz",
+                               entidad == "yucatan" ~ "Yucatán",
+                               entidad == "zacatecas" ~"Zacatecas")) %>%
+    mutate(entidad=factor(entidad, entidad)) %>%
+    ggplot( aes(x=entidad, y=total_detenciones) ) +
+    geom_bar(stat="identity", fill="#69b3a2") +
+    geom_text(aes(label=total_detenciones), vjust=1, hjust =1,check_overlap = T, size = 3, color= "black")+
+    scale_y_continuous(label=comma)+
+    coord_flip() +
+    theme_ipsum() +
+    theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        legend.position="bottom",
+        plot.title = element_text(size=16),
+        plot.subtitle = element_text(size=10)) +
+    labs(title = "Diez entidades con mayor número de detenciones migratorias",
+         subtitle = "Año 2021",
+         caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
+    xlab("") +
+    ylab("Total de detenciones migratorias por entidad federativa")
 
 
 
