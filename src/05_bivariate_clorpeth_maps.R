@@ -78,7 +78,7 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2021_2.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2021.png"), plot = bivariate, device = png())
 
 #2020 map
 # create 3 buckets for Area
@@ -143,7 +143,7 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2020_2.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2020.png"), plot = bivariate, device = png())
 
 #2019 map
 # create 3 buckets for Area
@@ -208,6 +208,6 @@ legend = ggplot() +
 bivariate= ggdraw() +
     draw_plot(map, 0, 0, 1, 1) +
     draw_plot(legend, 0.70, 0.60, 0.15, 0.15)
-ggsave(filename = here("plots","detenciones_despliegue_2019_2.png"), plot = bivariate, device = png())
+ggsave(filename = here("plots","detenciones_despliegue_2019.png"), plot = bivariate, device = png())
 
 

@@ -80,7 +80,7 @@ guardia_anual %>%
     ggplot(aes(x=ano, y=despliegue)) +
     geom_bar(fill = "#69b3a2", stat= "identity")+
     geom_text(aes(label=despliegue), vjust=-0.1, hjust =0.5,check_overlap = T, size = 3, color= "black")+
-    scale_y_continuous(label=comma, name ="Número de víctimas")+
+    scale_y_continuous(label=comma, name ="Número de elementos")+
 labs(title = "Elementos de la Guardia Nacional desplegados",
      subtitle = "Desagregado por año al mes de julio",
      caption = "Elaborado por MUCD con información de la Unidad de Transparencia de la GN")+
@@ -475,7 +475,7 @@ data_guardia_estaciones %>%
         plot.title = element_text(size=16),
         plot.subtitle = element_text(size=10)) +
     labs(title = "Diez entidades con mayor número de detenciones migratorias",
-         subtitle = "Año 2021",
+         subtitle = "Año 2019-2021",
          caption = "Elaboración propia con información de la Unidad de Política Migratoria de la SEGOB")+
     xlab("") +
     ylab("Total de detenciones migratorias por entidad federativa")
