@@ -40,3 +40,7 @@ data_guardia_estaciones_2019 = data_guardia_estaciones %>%
 
 #removing unwanted variables
 rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
+
+save(data_guardia_estaciones, file = here("data","clean","guardia_estaciones_final.RDS"))
+write_xlsx(data_guardia_estaciones, here("data","clean","guardia_estaciones_final.xlsx"))
+write_csv(data_guardia_estaciones, here("data","clean","guardia_estaciones_final.csv"))
