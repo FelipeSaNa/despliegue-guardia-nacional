@@ -46,4 +46,9 @@ estacion_2021 = estacion_2021 %>%
     left_join(claves_entidades, by = "entidad") %>%
     arrange(ano, entidad)
 
+#cleaning incidencia database
+incidencia = incidencia %>%
+    pivot_longer(cols = "2019":"2021",names_to = "ano", values_to = "delitos") %>%
+    mutate(delitos = round(delitos))
+
 #End

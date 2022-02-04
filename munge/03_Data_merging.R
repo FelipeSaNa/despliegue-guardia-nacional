@@ -41,6 +41,7 @@ data_guardia_estaciones_2019 = data_guardia_estaciones %>%
     filter(ano == 2019)
 
 #removing unwanted variables
+<<<<<<< HEAD
 rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
 
 #saving databases
@@ -48,3 +49,6 @@ rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
 save(data_guardia_estaciones, file = here("data","clean","data_fina_guardia_ingresos.RDS"))
 write_xlsx(data_guardia_estaciones, here("data","clean","data_fina_guardia_ingresos.xlsx"))
 write_csv(data_guardia_estaciones, here("data","clean","data_fina_guardia_ingresos.csv"))
+=======
+rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
+>>>>>>> b5241fbb82352f0c74618fa6e0f43f3951f576c0
