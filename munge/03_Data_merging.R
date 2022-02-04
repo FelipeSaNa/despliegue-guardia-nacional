@@ -21,13 +21,15 @@ guardia_all = data_2019 %>%
 estacion_all = estacion_2019 %>%
     full_join(estacion_2020) %>%
     full_join(estacion_2021) %>%
-    rename(migrantes_detenidos = value)
+    rename(ingresos_regulares = value)
 
 #joining both databases
 data_guardia_estaciones =
     guardia_all %>%
     left_join(estacion_all, by = c("ano", "mes", "entidad", "cve_entidad")) %>%
-    relocate(cve_entidad, .after = entidad)
+    relocate(cve_entidad, .after = entidad)%>%
+    mutate(ingresos_regulares = as.numeric(ingresos_regulares),
+           ingresos_regulares = replace_na(ingresos_regulares,0))
 
 data_guardia_estaciones_2021 = data_guardia_estaciones %>%
     filter(ano == 2021)
@@ -39,8 +41,22 @@ data_guardia_estaciones_2019 = data_guardia_estaciones %>%
     filter(ano == 2019)
 
 #removing unwanted variables
+<<<<<<< HEAD
 rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
 
 save(data_guardia_estaciones, file = here("data","clean","guardia_estaciones_final.RDS"))
 write_xlsx(data_guardia_estaciones, here("data","clean","guardia_estaciones_final.xlsx"))
 write_csv(data_guardia_estaciones, here("data","clean","guardia_estaciones_final.csv"))
+=======
+<<<<<<< HEAD
+rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
+
+#saving databases
+
+save(data_guardia_estaciones, file = here("data","clean","data_fina_guardia_ingresos.RDS"))
+write_xlsx(data_guardia_estaciones, here("data","clean","data_fina_guardia_ingresos.xlsx"))
+write_csv(data_guardia_estaciones, here("data","clean","data_fina_guardia_ingresos.csv"))
+=======
+rm(data_2019, data_2020, data_2021, estacion_2019, estacion_2020, estacion_2021)
+>>>>>>> b5241fbb82352f0c74618fa6e0f43f3951f576c0
+>>>>>>> f7628f97b09a44c384f183d61579c7b70dbb3753
